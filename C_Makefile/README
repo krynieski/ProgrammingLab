@@ -1,0 +1,7 @@
+Prosty program do prezentacji działania pliku Makefile.
+        main.c (wywołanie funkcji print)
+        include/
+        |- print.h (deklaracja funkcji print)
+        |- print.c (definicja funkcji print)
+
+Opis działania w pliku Makefile        
