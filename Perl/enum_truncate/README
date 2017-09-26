@@ -1,0 +1,22 @@
+Skrypt do wyszukiwania enuma, w ktorym jest zawarta szukana linia kodu.
+
+Po podaniu funkcji/stringa i pliku, w ktorym sie znajduje, skrypt wyszukuje wszystkie "typedef enum" oraz "}.*;" (zamkniecie enuma). Jesli otwarcie i zamkniecie enuma zostanie znalezione przed znalezieniem szukanej lini, wtedy enum nie jest brany pod uwage.
+
+W rezultacie skrypt wyswietla enuma, w ktorym szukana linia kodu sie znajduje (jesli w jakims sie znajduje, inaczej wyswietli tylko szukana linie kodu) wraz z numerami linii.
+
+TEST:
+1. uruchomienie skryptu z ktoryms elementem enuma z pliku enum.h, np:
+./enum_truncate B enum.h
+Oczekiwany wynik:
+1 occurences found
+1:Lines after processing:
+line 1: typedef enum {
+ line 3: B
+ line 4: } test_enum_1;
+2. uruchomienie skryptu z linia spoza enumow z pliku enum.h, np:
+./enum_truncate fun enum.h
+Oczekiwany wynik:
+1 occurences found
+1:Lines after processing:
+line 12: void fun();
+ 

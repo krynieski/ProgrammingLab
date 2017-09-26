@@ -1,0 +1,61 @@
+Prosta implementacja do nauki dzialania narzedzi { autoconf, automake, libtool }
+
+I. Instalacja potrzebnych tooli:
+sudo apt-get install autoconf
+
+II. Kroki (na podstawie tuoriala: http://mij.oltrelinux.com/devel/autoconf-automake/):
+( --- SYSTEM CHECKING PART --- )
+1. autoscan (tworzenie configure.ac: najpierw analizuje wszystkie pliki w drzewie katalogow i wypluwa configure.scan, którego nazwę trzeba zmienić na configure.ac)
+2. mv configure.scan configure.ac (configure.in - stara nazwa, porzucona)
+3. vim configure.ac
+	- w linii: AC_INIT([FULL-PACKAGE-NAME], [VERSION], [BUG-REPORT-ADDRESS]) wstawić własne nazwy i wersje
+4. autoconf (produkuje katalog autom4te.cache dla przyspieszenia pracy toola i plik configure - skrypt shellowy, w pierwszej wersji sprawdza tylko wymagania i ustawienia wygenerowane przez autoscan)
+( --- BUILDING AND INSTALLING PART --- )
+5. vim Makefile.am (ręczne stworzenie pliku z wytycznymi do wygenerowania Makefile'a)
+	AUTOMAKE_OPTIONS = foreign
+	SUBDIRS = src doc examples man scripts
+	(foreign oznacza "not GNU" - GNU oczekuje pewnej ustalonej struktury katalogów, w ten sposób unikamy "warningów", że struktura się nie zgadza; SUBDIRS - lista katalogów do "przemielenia" przy tworzeniu plików Makefile.in dla każdego z osobna)
+6. vim src/Makefile.am
+	# what flags you want to pass to the C compiler & linker
+	CFLAGS = --pedantic -Wall -std=c99 -O2
+	LDFLAGS =
+	
+	# this lists the binaries to produce, the (non-PHONY, binary) targets in
+	# the previous manual Makefile
+	bin_PROGRAMS = targetbinary1 targetbinary2 [...] targetbinaryN
+	targetbinary1_SOURCES = targetbinary1.c myheader.h [...]
+	targetbinary2_SOURCES = targetbinary2.c
+	.
+	.
+	targetbinaryN_SOURCES = targetbinaryN.c
+(czyli tutaj:
+	# what flags you want to pass to the C compiler & linker
+	CFLAGS = --pedantic -Wall -std=c99 -O2
+	LDFLAGS =
+	
+	# this lists the binaries to produce, the (non-PHONY, binary) targets in
+	# the previous manual Makefile
+	bin_PROGRAMS = main
+	main_SOURCES = main.c print.c
+nazwy dużymi literami jak _PROGRAMS, zwane "primary", wskazują częściowo co zrobić z podanymi argumentami; prefixy, pisane małymi literami, wskazują folder, w którym zainstalować wynik, tutaj katalog "bin", ale może być dowolnie, np sbin_PROGRAMS)
+7. vim man/Makefile.am
+	man_MANS = firstman.1 secondman.2 [...]
+(tutaj:
+	man_MANS = Manual
+)
+8. vim scripts/Makefile.am
+	bin_SCRIPTS = script1.sh script2.sh [...]
+(tutaj:
+	bin_SCRIPTS = echo.sh
+nazwa SCRIPTS wskazuje, że argumenty nie podlegają kompilacji)
+9-10. (pominięte póki co; dodawanie Makefile.am do doc i examples, nieco tricky)
+11. vim configure.ac (trzeba teraz poinformować autoconf o przygotowanych Makefile.am w celu wygenerowania poprawnego Makefile'a dla wszystkich)
+dopisać zaraz za AC_INIT()
+	AM_INIT_AUTOMAKE(krynieski, 0.1)
+	AC_OUTPUT(Makefile src/Makefile man/Makefile scripts/Makefile)
+12. aclocal (wygeneruje aclocal.m4 zawierający wszystkie potrzebne skrypty dla automake'a, jak AM_INIT_AUTOMAKE)
+13. automake --add-missing (czytanie configure.ac i głównego Makefile.am, interpretowanie, generowanie Makefile.in dla każdego Makefile.am; --add-missing - dodanie/uzupełnienie potrzebnych skryptów do reportowania błędów, instalowania itd., później może być pominięte)
+14. autoconf (wygenerowanie ostatecznego skryptu shellowego configure)
+15. ./configure
+16. make
+17. make install

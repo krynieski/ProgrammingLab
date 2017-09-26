@@ -1,0 +1,5 @@
+Testowanie funkcji swig - do tworzenia generycznych plikow zrodlowych
+
+1. Przygotowanie pliku header.h (recznie)
+2. Tworzenie pliku tymczasowego tmp.h zawierajcego podane definy i includy (automatycznie ze skryptu)
+3. Generowanie plikow wynikowych w formatach C i xml (swig.c i swig.xml) za pomoca wywolania swig (opcja -includeall powoduje dodanie podanych includow)
