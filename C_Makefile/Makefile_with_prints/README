@@ -1,0 +1,4 @@
+Mechanizm do printowania z poziomu Makefile'a
+$(info ...)
+$(warning ...)
+itd
