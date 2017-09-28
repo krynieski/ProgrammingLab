@@ -1,0 +1,4 @@
+DPDK:
+1. Examples:
+exception_path: corow musi by 2x wiecej niz portow (np. -p 1 -i 1 -o 2, analogicznie do przykladu -p 3 -i 3 -o c)
+exception_path -c 3 -n 4 -- -p 1 -i 1 -o 2

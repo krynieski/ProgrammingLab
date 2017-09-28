@@ -1,0 +1,23 @@
+Skrypt do wyszukiwania wszystkich funkcji zadeklarowanych/zdefiniowanych w zakresie podanej dyrektywy preprocesora (defina).
+
+Po podaniu dyrektywy i pliku, w ktorym sie znajduje, skrypt wyszukuje wszystkie deklaracje/definicje funkcji zawarte w zakresie podanej dyrektywy preprocesora, np:
+
+#if defined(SCOPE1)
+int fun1();
+int fun2();
+#endif
+
+#ifdef SCOPE2
+void fun3();
+#endif
+
+skrypt wywolany dla dyrektywy SCOPE1 wylistuje tylko funkcje fun1 i fun2.
+
+Jesli podano pusta dyrektywe "", to wylistowane zostana wszystkie funkcje.
+
+Pliki scope.h i scope.c do testow, np:
+./preproc_scope.pl SCOPE1 scope.h
+./preproc_scope.pl SCOPE1 scope.c
+(pliki sa tozsame, wiec wyniki beda takie same dla wszystkich argumentow)
+
+

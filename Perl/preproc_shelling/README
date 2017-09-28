@@ -1,0 +1,8 @@
+Skrypt do wyszukiwania wszystkich preprocesorowych definow, w jakich jest zawarta dana funkcja.
+
+Po podaniu funkcji i pliku, w ktorym sie znajduje, skrypt wyszukuje wszystkie dyrektywy preprocesora #ifdef i #endif (generalnie trzeba zmienic z #ifdef na #if, w celu znalezienia innych dyrektyw jak #if defined, #ifndef - w tym przypadku dla testu zostal zastosowany tylko #ifdef) az do wyszukiwanej funkcji wlacznie, dodaje je do listy, a nastepnie pracujac tylko na liscie, wycina wszystkie #ifdef-y i #endif-y, ktore "zamykaja" sie przed definicja funkcji (tzn. nie dotycza jej), zostawiajac tylko te, ktore byly otwarte, ale nie zamkniete przed funkcja.
+
+PRZYKLAD:
+./preproc_shelling.pl function functions.h
+
+W rezultacie skrypt wyswietla "otwarte" #ifdef-y przed funkcja, pokazujac w ktorych ifdefach dana funkcja faktycznie sie znajduje.
