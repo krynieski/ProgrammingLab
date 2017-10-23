@@ -1,0 +1,14 @@
+Error: expected '=', ',', ';', 'asm' or '__attribute__' before
+
+Problem z zaleznosciami typu: zbyt zagniezdzone includy (zbyt glebokie zaleznosci)
+Przyklad: 
+example
+	|- application (exec korzystajacy z libki zbudowanej z plikow w src, zawiera app_example.h)
+	|- src (zawiera lib_example.h)
+	|- subprogram (libka, ktora includuje app_example.h zdefiniowany w application, ktory includuje naglowek lib_example.h z src)
+Problem wynika z includowania naglowka z application (app_example.h), ktory includuje naglowek z src (lib_example.h) , ktory z kolei includuje kolejne naglowki z src (nieptrzebne bezposrednio ani posrednio w subprogramie)
+ROZWIAZANIE:
+- dodanie naglowka z src (lib_example.h) bezposrednio w subprogramie przed zaincludowaniem app_example.h
+	#include <lib_example.h>
+	#include <app_example.h>
+To powoduje, ze lib_example.h nie bedzie includowane ponownie przy includowaniu app_example.h (nie bedzie zbyt gleboko zagniezdzonych zaleznosci, ktore moga powodowac ten trudny do wykrycia problem)
