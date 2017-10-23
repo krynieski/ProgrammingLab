@@ -1,0 +1,27 @@
+Błąd "multiple definition of".
+Instrukcja: make
+
+Drzewo:
+|- main.c
+|- print.c
+|- count.c
+|- include/
+    |- print.h
+    |- count.h
+
+-OPIS:
+W print.h zdefiniowane są 2 zmienne globalne: tmp1 i tmp2.
+tmp1 jest zdefiniowane bezpośrednio, tmp2 zadeklarowane jako extern (definicja w print.c)
+
+-PROBLEM:
+plik print.h jest includowany w print.c, count.c i main.c - to powoduje błąd "multiple definition of 'tmp1'"
+
+-ROZWIĄZANIE:
+1. zmienne globalne nie powinny być definiowane w plikach nagłówkowych - tam tylko deklaracje (dla zmiennych globalnych deklaracje ze słowem kluczowym extern i definicja w jednym z plików *.c, tak jak zmienna tmp2)
+2. dodanie (otoczenie) w pliku nagłówkowym poniższych definicji NIE DZIAŁA w przypadku budowania przez pliki obiektowe (tak jak w tym przykładzie: main.o print.o count.o), gdyż każdy plik obiektowy ma osobno zaincludowany plik nagłówkowy:
+	#ifndef PRINT_H
+	#define PRINT_H
+
+	//treść pliku
+
+	#endif /*PRINT_H*/
