@@ -1,0 +1,3 @@
+Sposob na zmiane stringa przez funkcje.
+
+String musi byc podawany przez podwojny wskaznik, inaczej funkcja dzialalaby na kopii wskaznika i po zmianie stringa (co oznacza zaalokowanie nowego stringa w pamieci dynamicznej) oryginalny pozostalby bez zmian.

@@ -1,0 +1,4 @@
+TESTOWANIE PRZEKAZYWANIE STRUKTURY PRZEZ WSKAZNIK I ZMIAN JEJ WARTOSCI.
+
+PROBLEM:  w jednej z implementacji wartosci struktury nie zmienialy sie tak jakby funkcje zmieniajace dzialaly na kopiach struktury.
+Tutaj problem nie wystapil
