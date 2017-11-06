@@ -1,0 +1,26 @@
+Program helloworld do pokazania działania make distcheck (kompilacja, instalacja, generowanie tarball'a)
+Na podstawie https://robots.thoughtbot.com/the-magic-behind-configure-make-make-install
+(komentarze w plikach)
+
+Pliki dodane ręcznie:
+main.c
+configure.ac
+Makefile.am
+
+Pliki wygenerowana automatycznie:
+aclocal i autom4te.cache - m4 environment for autotools (aclocal)
+configure - z configure.ac (autoconf)
+Makefile.in - z Makefile.am (automake)
+Makefile - z Makefile.in (./configure)
+pozostałe (w tym skompilowany main) - z Makefile (make)
+helloworld-0.1.tar.gz - z make distcheck
+itd
+
+Komendy do wygenerowania pliku configure i plku Makefile.in i później Makefile jak wyżej:
+aclocal
+autoconf
+automake --add-missing
+./configure
+make distcheck
+(make distclean - kasowanie plików binarnych)
+
