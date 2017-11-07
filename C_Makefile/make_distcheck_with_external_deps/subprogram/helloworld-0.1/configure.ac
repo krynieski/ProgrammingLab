@@ -11,7 +11,5 @@ AC_PROG_CC
 # the results to Makefile
 AC_CONFIG_FILES([Makefile])
 
-AC_CHECK_HEADERS([header.h])
-
 # call the AC_OUTPUT macro to output the script:
 AC_OUTPUT

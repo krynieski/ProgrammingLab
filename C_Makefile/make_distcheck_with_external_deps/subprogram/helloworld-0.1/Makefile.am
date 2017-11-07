@@ -8,6 +8,10 @@ bin_PROGRAMS = helloworld
 
 helloworld_SOURCES = main.c
 
-helloworld_CPPFLAGS = -I../src/include
+helloworld_CPPFLAGS = -I@top_srcdir@/../src/include
+
+helloworld_EXTRA = @top_srcdir@/../src/include/header.h
+
+EXTRA_DIST = $(helloworld_EXTRA)
 
 AM_CPPFLAGS = $(helloworld_CPPFLAGS)
